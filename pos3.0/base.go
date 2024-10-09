@@ -35,7 +35,4 @@ type Pos3_0 interface {
 	SendData() (SuccessResponse, error)
 	Info() (InfoResponse, error)
 	BankAccounts(tin string) ([]BankAccountData, error)
-
-	// References
-	DistrictCode() (DistrictResponse, error)
 }

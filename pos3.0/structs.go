@@ -1,13 +1,17 @@
 package pos3_0
 
-// region Цахим төлбөрийн баримт API
+// region Нэгдсэн нэвтрэлт
 type (
+
+	// Token авах хүсэлт
 	TokenRequest struct {
 		GrantType string `json:"grant_type"` // Example: password
 		Username  string `json:"username"`   // Example: easy-register-test
 		Password  string `json:"password"`   // Example: Test@123
 		ClientID  string `json:"client_id"`  // Example: vatps
 	}
+
+	// Token авах хариу
 	TokenResponse struct {
 		AccessToken      string `json:"access_token"` // Use this token
 		ExpiresIn        string `json:"expires_in"`
@@ -18,6 +22,8 @@ type (
 		SessionState     string `json:"session_state"`
 		Scope            string `json:"scope"`
 	}
+
+	// Алдааны хариу
 	ErrorResponse struct {
 		Path             string `json:"path"`
 		Status           int    `json:"status"`
@@ -150,18 +156,26 @@ type (
 	}
 )
 
-// Хялбар бүртгэлийн API холболт
+// endregion
+
+// region Хялбар бүртгэлийн API холболт
 type (
+
+	// Иргэний мэдээлэл регистрийн дугаараар лавлах хариу
 	ConsumerInfoResponse struct {
 		RegNo      string `json:"regNo"`      //Иргэний регистрийн дугаар
 		LoginName  string `json:"loginName"`  // Ebarimt-н нэвртэх нэр буюу 8 оронтой хэрэглэгчийн код
 		GiveName   string `json:"giveName"`   // Хэрэглэгчийн нэр
 		FamilyName string `json:"familyName"` // Хэрэглэгчийн овог
 	}
+
+	// Иргэний мэдээллийг утасны дугаараар болон хэрэглэгчийн дугаараар лавлах хүсэлт
 	GetProfileRequest struct {
 		PhoneNum   string `json:"phoneNum"`   // Иргэний утасны дугаар /Хэрэглэгчийн дугаар талбарт өгөдөл оруулсан бол заавал биш/
 		CustomerNo string `json:"customerNo"` // Хэрэглэгчийн дугаарр./Иргэний утасны дугаар талбарт өгөдөл оруулсан бол заавал биш/
 	}
+
+	// Иргэний мэдээллийг утасны дугаараар болон хэрэглэгчийн дугаараар лавлах хариу
 	GetProfileResponse struct {
 		Msg       string `json:"msg"`       // Сервисийн хариу
 		Status    int    `json:"status"`    // Service ийн төлөв
@@ -170,16 +184,20 @@ type (
 		LoginName string `json:"loginName"` // Ebarimt-н нэвртэх нэр буюу 8 оронтой хэрэглэгчийн код.
 	}
 
+	// Төлбөрийн баримт баталгаажуулах хүсэлт
 	ApproveQrRequest struct {
 		CustomerNo string `json:"customerNo"`
 		QrData     string `json:"qrData"`
 	}
+
+	// Төлбөрийн баримт баталгаажуулах хариу
 	ApproveQrResponse struct {
 		Msg    string `json:"msg"`    // Сервисийн хариу
 		Status int    `json:"status"` // Service ийн төлөв
 		Code   string `json:"code"`   // Сервисийн хариу
 	}
 
+	// Гадаад жуулчны мэдээллийг лавлах хариу
 	ForiegnerInfoResponse struct {
 		RegNo      string `json:"regNo"`      // Гадаад иргэний регистрийн дугаар.
 		LoginName  string `json:"loginName"`  // Ebarimt-н нэвтрэх нэр буюу 8 оронтой хэрэглэгчийн код.
@@ -190,6 +208,8 @@ type (
 		PassportNo string `json:"passportNo"` // Гадаад паспортын дугаар.
 		FNumber    string `json:"fNumber"`    // F регистрийн дугаар.
 	}
+
+	// Гадаад жуулчны мэдээллийг E-barimt-н системд бүртгэх хүсэлт
 	ForiegnerInfoRequest struct {
 		Email string `json:"email"`
 	}
@@ -197,6 +217,7 @@ type (
 
 //endregion
 
+// region Pos хүсэлт
 type (
 	ReceiptRequest struct {
 		TotalAmount  float64         `json:"totalAmount"`  // Багц баримтын гүйлгээний нийт дүн (Бүх төрлийн татвар шингэсэн дүн)
@@ -305,18 +326,6 @@ type (
 	SuccessResponse struct {
 		Success bool `json:"success"`
 	}
-
-	// References
-
-	DistrictResponse struct {
-		Message string         `json:"msg"`
-		Status  int            `json:"status"`
-		Data    []DistrictCode `json:"data"`
-	}
-	DistrictCode struct {
-		BranchCode    string `json:"branchCode"`
-		BranchName    string `json:"branchName"`
-		SubBranchCode string `json:"subBranchCode"`
-		SubBranchName string `json:"subBranchName"`
-	}
 )
+
+// endregion

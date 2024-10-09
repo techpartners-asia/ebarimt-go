@@ -103,12 +103,6 @@ var (
 		Url:    "/rest/bankAccounts?",
 		Method: http.MethodGet,
 	}
-
-	// Refernces
-	DistrictCodeAPI = utils.API{
-		Url:    "https://api.ebarimt.mn/api/info/check/getBranchInfo",
-		Method: http.MethodGet,
-	}
 )
 
 type CustomHeader struct {
@@ -222,27 +216,6 @@ func (p *pos3_0) httpPosRequest(body interface{}, api utils.API, ext string, hea
 		p.token = &token
 		req.Header.Add("Authorization", "Bearer "+p.token.AccessToken)
 	}
-	res, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer res.Body.Close()
-	response, err := io.ReadAll(res.Body)
-	if err != nil {
-		return nil, err
-	}
-	if res.StatusCode != 200 {
-		return nil, errors.New(string(response))
-	}
-	return response, nil
-}
-
-func (p *pos3_0) httpReferncesRequest(api utils.API) ([]byte, error) {
-	req, err := http.NewRequest(api.Method, api.Url, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header.Add("Accept", utils.HttpAcceptPublic)
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
