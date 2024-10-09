@@ -3,6 +3,7 @@ package utils
 type API struct {
 	Url    string `json:"url"`
 	Method string `json:"method"`
+	IsAuth bool   `json:"isAuth"`
 }
 
 const (

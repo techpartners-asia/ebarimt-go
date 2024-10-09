@@ -20,28 +20,94 @@ var (
 	GetBranchInfoAPI = utils.API{
 		Url:    "https://api.ebarimt.mn/api/info/check/getBranchInfo",
 		Method: http.MethodGet,
+		IsAuth: false,
 	}
 	GetTinInfoAPI = utils.API{
 		Url:    "https://api.ebarimt.mn/api/info/check/getTinInfo?regNo=",
 		Method: http.MethodGet,
+		IsAuth: false,
 	}
 
 	GetInfoAPI = utils.API{
 		Url:    "https://api.ebarimt.mn/api/info/check/getInfo?tin=",
 		Method: http.MethodGet,
+		IsAuth: false,
 	}
 
 	GetSalesTotalAPI = utils.API{
 		Url:    "https://api.ebarimt.mn/api/tpi/receipt/getSalesTotalData",
 		Method: http.MethodPost,
+		IsAuth: true,
 	}
 	GetSalesListERPAPI = utils.API{
 		Url:    "https://api.ebarimt.mn/api/tpi/receipt/getSaleListERP",
 		Method: http.MethodPost,
+		IsAuth: true,
 	}
 	SaveOprMerchantsAPI = utils.API{
 		Url:    "https://api.ebarimt.mn/api/tpi/receipt/%20saveOprMerchants",
 		Method: http.MethodPost,
+		IsAuth: true,
+	}
+
+	// Хялбар бүртгэл
+	ConsumerInfoAPI = utils.API{
+		Url:    "https://service.itc.gov.mn/api/easy-register/api/info/consumer/",
+		Method: http.MethodGet,
+		IsAuth: true,
+	}
+	GetProfileAPI = utils.API{
+		Url:    "https://service.itc.gov.mn/api/easy-register/rest/v1/getProfile",
+		Method: http.MethodPost,
+		IsAuth: true,
+	}
+	ApproveQrAPI = utils.API{
+		Url:    "https://service.itc.gov.mn/api/easy-register/rest/v1/approveQr",
+		Method: http.MethodPost,
+		IsAuth: true,
+	}
+
+	ForiegnerPassportInfoAPI = utils.API{
+		Url:    "https://service.itc.gov.mn/api/easy-register/api/info/foreigner/",
+		Method: http.MethodGet,
+		IsAuth: true,
+	}
+	ForiegnerCustomerNoInfoAPI = utils.API{
+		Url:    "https://service.itc.gov.mn/api/easy-register/api/info/foreigner/customerNo/",
+		Method: http.MethodGet,
+		IsAuth: true,
+	}
+	ForiegnerInfoRegAPI = utils.API{
+		Url:    "https://service.itc.gov.mn/api/easy-register/api/info/foreigner/",
+		Method: http.MethodPut,
+		IsAuth: true,
+	}
+	// Pos requests
+	PosReceiptSendAPI = utils.API{
+		Url:    "/rest/receipt",
+		Method: http.MethodPost,
+	}
+	PosReceiptDeleteAPI = utils.API{
+		Url:    "/rest/receipt",
+		Method: http.MethodDelete,
+	}
+	PosSendAPI = utils.API{
+		Url:    "/rest/send",
+		Method: http.MethodGet,
+	}
+	PosInfoAPI = utils.API{
+		Url:    "/rest/info",
+		Method: http.MethodGet,
+	}
+	PosBankAccAPI = utils.API{
+		Url:    "/rest/bankAccounts?",
+		Method: http.MethodGet,
+	}
+
+	// Refernces
+	DistrictCodeAPI = utils.API{
+		Url:    "https://api.ebarimt.mn/api/info/check/getBranchInfo",
+		Method: http.MethodGet,
 	}
 )
 
@@ -50,7 +116,7 @@ type CustomHeader struct {
 	Value string
 }
 
-func (p *pos3_0) httpRequest(body interface{}, api utils.API, ext string, headers []CustomHeader, isAuth bool) ([]byte, error) {
+func (p *pos3_0) httpRequest(body interface{}, api utils.API, ext string, headers []CustomHeader) ([]byte, error) {
 
 	var requestByte []byte
 	var requestBody *bytes.Reader
@@ -66,7 +132,7 @@ func (p *pos3_0) httpRequest(body interface{}, api utils.API, ext string, header
 	for _, header := range headers {
 		req.Header.Add(header.Name, header.Value)
 	}
-	if isAuth {
+	if api.IsAuth {
 		token, err := p.auth()
 		if err != nil {
 			return nil, err
@@ -75,10 +141,10 @@ func (p *pos3_0) httpRequest(body interface{}, api utils.API, ext string, header
 		req.Header.Add("Authorization", "Bearer "+p.token.AccessToken)
 	}
 	res, err := http.DefaultClient.Do(req)
-	defer res.Body.Close()
 	if err != nil {
 		return nil, err
 	}
+	defer res.Body.Close()
 	response, err := io.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
@@ -117,14 +183,77 @@ func (q *pos3_0) auth() (authRes TokenResponse, err error) {
 	req.Header.Add("Accept", utils.HttpAcceptPrivate)
 	req.Header.Add("Content-Type", utils.HttpContentType)
 	res, err := http.DefaultClient.Do(req)
-	defer res.Body.Close()
 	if err != nil {
 		return
 	}
+	defer res.Body.Close()
 	if res.StatusCode != http.StatusOK {
 		return authRes, fmt.Errorf("%s- Ebarimt POS 3.0 openid connect error response: %s", time.Now().Format(utils.TimeFormatYYYYMMDDHHMMSS), res.Status)
 	}
 	resp, _ := io.ReadAll(res.Body)
 	json.Unmarshal(resp, &authRes)
 	return authRes, nil
+}
+
+func (p *pos3_0) httpPosRequest(body interface{}, api utils.API, ext string, headers []CustomHeader) ([]byte, error) {
+
+	var requestByte []byte
+	var requestBody *bytes.Reader
+	if body == nil {
+		requestBody = bytes.NewReader(nil)
+	} else {
+		requestByte, _ = json.Marshal(body)
+		requestBody = bytes.NewReader(requestByte)
+	}
+
+	req, err := http.NewRequest(api.Method, p.posEndpoint+api.Url+ext, requestBody)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Add("Accept", utils.HttpAcceptPublic)
+	for _, header := range headers {
+		req.Header.Add(header.Name, header.Value)
+	}
+	if api.IsAuth {
+		token, err := p.auth()
+		if err != nil {
+			return nil, err
+		}
+		p.token = &token
+		req.Header.Add("Authorization", "Bearer "+p.token.AccessToken)
+	}
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	response, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+	if res.StatusCode != 200 {
+		return nil, errors.New(string(response))
+	}
+	return response, nil
+}
+
+func (p *pos3_0) httpReferncesRequest(api utils.API) ([]byte, error) {
+	req, err := http.NewRequest(api.Method, api.Url, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Add("Accept", utils.HttpAcceptPublic)
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+	response, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+	if res.StatusCode != 200 {
+		return nil, errors.New(string(response))
+	}
+	return response, nil
 }

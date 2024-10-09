@@ -3,7 +3,7 @@ package pos3_0
 import "encoding/json"
 
 func (p *pos3_0) GetBranchInfo() (GetBranchInfoResponse, error) {
-	response, err := p.httpRequest(nil, GetBranchInfoAPI, "", nil, false)
+	response, err := p.httpRequest(nil, GetBranchInfoAPI, "", nil)
 	if err != nil {
 		return GetBranchInfoResponse{}, err
 	}
@@ -13,7 +13,7 @@ func (p *pos3_0) GetBranchInfo() (GetBranchInfoResponse, error) {
 }
 
 func (p *pos3_0) GetTinInfo(regNo string) (GetTinInfoResponse, error) {
-	response, err := p.httpRequest(nil, GetTinInfoAPI, regNo, nil, false)
+	response, err := p.httpRequest(nil, GetTinInfoAPI, regNo, nil)
 	if err != nil {
 		return GetTinInfoResponse{}, err
 	}
@@ -23,7 +23,7 @@ func (p *pos3_0) GetTinInfo(regNo string) (GetTinInfoResponse, error) {
 }
 
 func (p *pos3_0) GetInfo(regNo string) (GetInfoResponse, error) {
-	response, err := p.httpRequest(nil, GetInfoAPI, regNo, nil, false)
+	response, err := p.httpRequest(nil, GetInfoAPI, regNo, nil)
 	if err != nil {
 		return GetInfoResponse{}, err
 	}
@@ -39,7 +39,7 @@ func (p *pos3_0) GetSalesTotalData(body GetSalesTotalDataRequest) (GetSalesTotal
 		Value: p.apiKey,
 	}
 	headers = append(headers, header)
-	response, err := p.httpRequest(body, GetSalesTotalAPI, "", headers, true)
+	response, err := p.httpRequest(body, GetSalesTotalAPI, "", headers)
 	if err != nil {
 		return GetSalesTotalDataResponse{}, err
 	}
@@ -55,7 +55,7 @@ func (p *pos3_0) GetSalesListERP(body GetSalesListERPRequest) (GetSalesTotalData
 		Value: p.apiKey,
 	}
 	headers = append(headers, header)
-	response, err := p.httpRequest(body, GetSalesListERPAPI, "", headers, true)
+	response, err := p.httpRequest(body, GetSalesListERPAPI, "", headers)
 	if err != nil {
 		return GetSalesTotalDataResponse{}, err
 	}
@@ -65,7 +65,7 @@ func (p *pos3_0) GetSalesListERP(body GetSalesListERPRequest) (GetSalesTotalData
 }
 
 func (p *pos3_0) SaveOprMerchants(body SaveOprMerchantsRequest) (SaveOprMerchantsResponse, error) {
-	response, err := p.httpRequest(body, GetSalesListERPAPI, "", nil, false)
+	response, err := p.httpRequest(body, GetSalesListERPAPI, "", nil)
 	if err != nil {
 		return SaveOprMerchantsResponse{}, err
 	}
