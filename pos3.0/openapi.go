@@ -2,6 +2,13 @@ package pos3_0
 
 import "encoding/json"
 
+// Цахим төлбөрийн баримтын систем /PosApi/-ээс үүсгэж буй төлбөрийн баримтын үйл ажиллагаа явуулж буй байршлын мэдээллийг “districtCode” гэсэн баганад бөглөн илгээдэг ба дээрх талбарт бөглөн, илгээх байршлын татварын алба, дэд албаны кодын жагсаалтын мэдээллийг энэхүү сервисээс авах боломжтой.
+//
+// Жишээ нь: Номин холдинг ХХК-ийн Архангай аймаг дахь салбараас үүсгэсэн баримтын “districtCode”-г 01-гэж бөглөн илгээнэ.
+//
+// Ebarimt.mn API call: GET /api/info/check/getBranchInfo
+//
+// See https://developer.itc.gov.mn/docs/ebarimt-api/vxfs8o0ezfnsa-tatvaryn-alba-ded-albany-nerijn-kod-zhagsaaltyn-servis
 func (p *pos3_0) GetBranchInfo() (GetBranchInfoResponse, error) {
 	response, err := p.httpRequest(nil, GetBranchInfoAPI, "", nil)
 	if err != nil {

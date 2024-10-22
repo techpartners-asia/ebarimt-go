@@ -39,32 +39,40 @@ type (
 
 // region Цахим төлбөрийн баритм API холболт
 type (
+
+	// Татварын алба, дэд албаны нэрийн, код жагсаалтын сервисийн хариу
 	GetBranchInfoResponse struct {
 		Msg    string              `json:"msg"`    // Сервисийн хариу
 		Status int                 `json:"status"` // Service ийн төлөв
-		Code   string              `json:"code"`
-		Data   []GetBranchInfoData `json:"data"`
-	}
-	GetBranchInfoData struct {
-		BranchCode    string `json:"branchCode"`
-		BranchName    string `json:"branchName"`
-		SubBranchCode string `json:"subBranchCode"`
-		SubBranchName string `json:"subBranchName"`
+		Code   string              `json:"code"`   // Код
+		Data   []GetBranchInfoData `json:"data"`   // Өгөгдөл
 	}
 
+	// Татварын алба, дэд албаны нэрийн, код жагсаалт мэдээлэл
+	GetBranchInfoData struct {
+		BranchCode    string `json:"branchCode"`    // Салбарын код
+		BranchName    string `json:"branchName"`    // Салбарын нэр
+		SubBranchCode string `json:"subBranchCode"` // Дэд салбарын код
+		SubBranchName string `json:"subBranchName"` // Дэд салбарын нэр
+	}
+
+	// Татвар төлөгчийн дугаар лавлах сервис /ТIN, Civil_id/ хариу
 	GetTinInfoResponse struct {
 		Msg    string `json:"msg"`    // Сервисийн хариу
 		Status int    `json:"status"` // Service ийн төлөв
-		Code   string `json:"code"`
-		Data   string `json:"data"` // ТИН дугаар
+		Code   string `json:"code"`   // Код
+		Data   string `json:"data"`   // ТИН дугаар
 	}
 
+	// Татвар төлөгчийн бүртгэлийн мэдээлэл лавлах сервис хариу
 	GetInfoResponse struct {
 		Msg    string      `json:"msg"`    // Сервисийн хариу
 		Status int         `json:"status"` // Service ийн төлөв
-		Code   string      `json:"code"`
-		Data   GetInfoData `json:"data"` // ТИН дугаар
+		Code   string      `json:"code"`   // Код
+		Data   GetInfoData `json:"data"`   // Өгөгдөл
 	}
+
+	// Татвар төлөгчийн бүртгэлийн мэдээлэл
 	GetInfoData struct {
 		Name                   string `json:"name"`                   // Нэр
 		FreeProject            bool   `json:"freeProject"`            // НӨАТ-аас чөлөөлөгдөх төсөл хөтөлбөр эсэх
@@ -73,6 +81,8 @@ type (
 		Found                  bool   `json:"found"`                  // Татвар төлөгчөөр бүртгэлтэй эсэх
 		VatPayerRegisteredDate string `json:"vatpayerRegisteredDate"` // НӨАТ суутган төлөгчөөр бүртгүүлсэн огноо
 	}
+
+	// Борлуулалтын задаргааны мэдээлэл татах сервисийн хүсэлт
 	GetSalesTotalDataRequest struct {
 		Year       string           `json:"year"`       // Задаргаа авч буй баримтын он
 		Month      string           `json:"month"`      // Задаргаа авч буй баримтын сар
@@ -81,16 +91,20 @@ type (
 		StartCount int              `json:"startCount"` // Тухайн баримтын эхлэх тоо
 		EndCount   int              `json:"endCount"`   // Тухайн баримтын дуусах тоо
 	}
+
+	// Борлуулалтын задаргааны мэдээлэл татах сервисийн хариу
 	GetSalesTotalDataResponse struct {
-		Msg    string      `json:"msg"`    // Сервисийн хариу
-		Status int         `json:"status"` // Service ийн төлөв
-		Code   string      `json:"code"`
-		Data   GetInfoData `json:"data"`
+		Msg    string            `json:"msg"`    // Сервисийн хариу
+		Status int               `json:"status"` // Service ийн төлөв
+		Code   string            `json:"code"`   // Код
+		Data   GetSalesTotalData `json:"data"`   // Өгөгдөл
 	}
 	GetSalesTotalData struct {
-		List      []GetSalesData `json:"list"`
+		Content   []GetSalesData `json:"content"`
 		PageModel PageModel      `json:"pageModel"`
 	}
+
+	// Борлуулалтын задаргааны мэдээлэл
 	GetSalesData struct {
 		PosSid       string  `json:"posSid"`       // Посын системийн дугаар
 		PosRno       string  `json:"posRno"`       // Төлбөрийн баримтын ДДТД
@@ -106,10 +120,12 @@ type (
 		OperatorName string  `json:"operatorName"` // Хэрэглэгчийн систем нийлүүлэгчийн нэр
 		DistrictCode string  `json:"districtCode"` // Төлбөрийн баримтын байршлын нэр
 	}
+
+	// Борлуулалтын задаргааны хуудасны мэдээлэл
 	PageModel struct {
 		TotalElements int `json:"totalElements"` // Нийт баримтын тоо
 	}
-
+	// Толгой татвар төлөгч өөрийн охин компанийн худалдан авалт татах сервисийн хүсэлт
 	GetSalesListERPRequest struct {
 		Pin       string   `json:"Pin"`       // Толгой компанийн регистрийн дугаар
 		StartDate string   `json:"StartDate"` // Баримт татах эхлэх огноо
@@ -117,11 +133,12 @@ type (
 		EndDate   int      `json:"EndDate"`   // Баримт татах дуусах огноо
 	}
 
+	// Толгой татвар төлөгч өөрийн охин компанийн худалдан авалт татах сервисийн хариу
 	GEtSalesListERPResponse struct {
 		Msg    string              `json:"msg"`    // Сервисийн хариу
 		Status int                 `json:"status"` // Service ийн төлөв
-		Code   string              `json:"code"`
-		Data   GEtSalesListERPData `json:"data"`
+		Code   string              `json:"code"`   // Код
+		Data   GEtSalesListERPData `json:"data"`   // Өгөгдөл
 	}
 	GEtSalesListERPData struct {
 		StartDate           string            `json:"startDate"`           // эхлэх огноо
@@ -129,6 +146,8 @@ type (
 		RegNo               string            `json:"regNo"`               // Толгой компанийн регистр
 		RecieptBuyModelList []RecieptBuyModel `json:"receiptBuyModelList"` // Худалдан авалтын баримтын жагсаалт
 	}
+
+	// Худалдан авалтын баримтын мэдээлэл
 	RecieptBuyModel struct {
 		PrPosRno      string  `json:"prPosRno"`      // Төлбөрийн баримтын ДДТД
 		Name          string  `json:"name"`          // Борлуулагчийн нэр
@@ -142,17 +161,19 @@ type (
 		FromType      string  `json:"fromType"`      // Хаанаас баримт хэвлэсэн /INVOICE, POS API/
 	}
 
+	// Оператороос мерчант бүртгэх хүсэлт илгээх сервисийх хүсэлт
 	SaveOprMerchantsRequest struct {
 		OprRegNo string   `json:"oprRegNo"` // Оператор компани буюу Хэрэглэгчийн систем нийлүүлэгчийн регистр
 		PosNo    string   `json:"posNo"`    // Пос-ын дугаар
 		List     []string `json:"list"`     // Бүртгэх мерчантын жагсаалт
 	}
 
+	// Оператороос мерчант бүртгэх хүсэлт илгээх сервисийх хариу
 	SaveOprMerchantsResponse struct {
 		Msg    string        `json:"msg"`    // Сервисийн хариу
 		Status int           `json:"status"` // Service ийн төлөв
-		Code   string        `json:"code"`
-		Data   []interface{} `json:"data"`
+		Code   string        `json:"code"`   // Код
+		Data   []interface{} `json:"data"`   // Өгөгдөл
 	}
 )
 
@@ -161,7 +182,7 @@ type (
 // region Хялбар бүртгэлийн API холболт
 type (
 
-	// Иргэний мэдээлэл регистрийн дугаараар лавлах хариу
+	// Иргэний мэдээлэл регистрийн дугаараар лавлах сервисийн хариу
 	ConsumerInfoResponse struct {
 		RegNo      string `json:"regNo"`      //Иргэний регистрийн дугаар
 		LoginName  string `json:"loginName"`  // Ebarimt-н нэвртэх нэр буюу 8 оронтой хэрэглэгчийн код
@@ -169,13 +190,13 @@ type (
 		FamilyName string `json:"familyName"` // Хэрэглэгчийн овог
 	}
 
-	// Иргэний мэдээллийг утасны дугаараар болон хэрэглэгчийн дугаараар лавлах хүсэлт
+	// Иргэний мэдээллийг утасны дугаараар болон хэрэглэгчийн дугаараар лавлах сервисийн хүсэлт
 	GetProfileRequest struct {
 		PhoneNum   string `json:"phoneNum"`   // Иргэний утасны дугаар /Хэрэглэгчийн дугаар талбарт өгөдөл оруулсан бол заавал биш/
 		CustomerNo string `json:"customerNo"` // Хэрэглэгчийн дугаарр./Иргэний утасны дугаар талбарт өгөдөл оруулсан бол заавал биш/
 	}
 
-	// Иргэний мэдээллийг утасны дугаараар болон хэрэглэгчийн дугаараар лавлах хариу
+	// Иргэний мэдээллийг утасны дугаараар болон хэрэглэгчийн дугаараар лавлах сервисийн хариу
 	GetProfileResponse struct {
 		Msg       string `json:"msg"`       // Сервисийн хариу
 		Status    int    `json:"status"`    // Service ийн төлөв
@@ -184,20 +205,20 @@ type (
 		LoginName string `json:"loginName"` // Ebarimt-н нэвртэх нэр буюу 8 оронтой хэрэглэгчийн код.
 	}
 
-	// Төлбөрийн баримт баталгаажуулах хүсэлт
+	// Төлбөрийн баримт баталгаажуулах сервисийн хүсэлт
 	ApproveQrRequest struct {
 		CustomerNo string `json:"customerNo"`
 		QrData     string `json:"qrData"`
 	}
 
-	// Төлбөрийн баримт баталгаажуулах хариу
+	// Төлбөрийн баримт баталгаажуулах сервисийн хариу
 	ApproveQrResponse struct {
 		Msg    string `json:"msg"`    // Сервисийн хариу
 		Status int    `json:"status"` // Service ийн төлөв
 		Code   string `json:"code"`   // Сервисийн хариу
 	}
 
-	// Гадаад жуулчны мэдээллийг лавлах хариу
+	// Гадаад жуулчны мэдээллийг лавлах сервисийн хариу
 	ForiegnerInfoResponse struct {
 		RegNo      string `json:"regNo"`      // Гадаад иргэний регистрийн дугаар.
 		LoginName  string `json:"loginName"`  // Ebarimt-н нэвтрэх нэр буюу 8 оронтой хэрэглэгчийн код.
@@ -209,7 +230,7 @@ type (
 		FNumber    string `json:"fNumber"`    // F регистрийн дугаар.
 	}
 
-	// Гадаад жуулчны мэдээллийг E-barimt-н системд бүртгэх хүсэлт
+	// Гадаад жуулчны мэдээллийг E-barimt-н системд бүртгэх сервисийн хүсэлт
 	ForiegnerInfoRequest struct {
 		Email string `json:"email"`
 	}
@@ -219,6 +240,8 @@ type (
 
 // region Pos хүсэлт
 type (
+
+	// Баримтын хүсэлт
 	ReceiptRequest struct {
 		TotalAmount  float64         `json:"totalAmount"`  // Багц баримтын гүйлгээний нийт дүн (Бүх төрлийн татвар шингэсэн дүн)
 		TotalVat     float64         `json:"totalVat"`     // Багц баримтын НӨАТ-н нийт дүн
@@ -236,6 +259,8 @@ type (
 		Receipts     []Receipt       `json:"receipts"`     // Дэд төлбөрийн баримтууд
 		Payments     []Payment       `json:"payments"`     // Төлбөрийн хэлбэр
 	}
+
+	// Дэд төлбөрийн баримтын мэдээлэл
 	Receipt struct {
 		TotalAmount   float64     `json:"totalAmount"`   // Дэд төлбөрийн баримтын гүйлгээний нийт дүн (Бүх төрлийн татвар шингэсэн дүн)
 		TotalVat      float64     `json:"totalVat"`      // Дэд төлбөрийн баримтын НӨАТ-н нийт дүн
@@ -246,6 +271,8 @@ type (
 		Data          interface{} `json:"data"`          // Дэд төлбөрийн баримтын нэмэлт өгөгдөл.
 		Items         []Item      `json:"items"`         // Борлуулсан бүтээгдэхүүн, үйлчилгээний жагсаалт
 	}
+
+	// Борлуулсан бүтээгдэхүүн, үйлчилгээний мэдээлэл
 	Item struct {
 		Name               string          `json:"name"`               // Бүтээгдэхүүн, үйлчилгээний нэр
 		BarCode            string          `json:"barCode"`            // Бүтээгдэхүүний зураасан код
@@ -262,6 +289,7 @@ type (
 		Data               interface{}     `json:"data"`         // Бүтээгдэхүүн, үйлчилгээний нэмэлт өгөгдөл
 	}
 
+	// Төлбөрийн хэлбэрийн мэдээлэл
 	Payment struct {
 		Code         PaymentCodeEnum   `json:"code"`         // Төлбөрийн хэлбэрийн код
 		ExchangeCode string            `json:"exchangeCode"` // Төлбөр хийж гүйцэтгэх гуравдагч системийн код
@@ -270,6 +298,7 @@ type (
 		Data         interface{}       `json:"data"`         // Төлбөрийн нэмэлт өгөгдөл
 	}
 
+	// Баримтын хариу
 	ReceiptResponse struct {
 		ID       string        `json:"id"`      // Багц төлбөрийн баримтын ДДТД
 		PosID    float64       `json:"posId"`   // PosAPI-н системийн дугаар
@@ -281,14 +310,20 @@ type (
 		Easy     bool          `json:"easy"`    // Хялбар бүртгэл хийгдсэн эсэх /true - хялбар бүртгэлд бүртгэсэн /false - хялбар бүртгэлд бүртгээгүй
 		Receipts []ReceiptData `json:"receipts"`
 	}
+
+	// Дэд төлбөрийн баримтын мэдээлэл
 	ReceiptData struct {
 		ID            string `json:"id"`            // Дэд баримтын ДДТД
 		BankAccountID int    `json:"bankAccountId"` // ААН, Иргэний системд бүртгэсэн банкны дансны ID
 	}
+
+	// PosAPI-руу төлбөрийн баримт буцаах сервисийн хүсэлт
 	ReceiptDeleteRequest struct {
 		ID   string `json:"id"`   // Багц төлбөрийн баримтын ДДТД (33 оронтой тоо)
 		Date string `json:"date"` // Баримт хэвэлсэн огноо ("yyyy-MM-dd HH:mm:ss" форматтай огноо)
 	}
+
+	// PosAPI-ын ажиллагааны мэдээлэл хүлээн авах сервисийн хариу
 	InfoResponse struct {
 		OperatorName  string         `json:"operatorName"`  // Оператор байгууллагын нэр
 		OperatorTin   string         `json:"operatorTIN"`   // Оператор байгууллагын ТТД
@@ -299,6 +334,8 @@ type (
 		AppInfo       AppInfo        `json:"appInfo"`       // PosAPI-н ерөнхий мэдээлэл
 		Merchants     []MerchantData `json:"merchants"`     // PosAPI-д бүртгэлтэй ААН-н жагсаалт
 	}
+
+	// PosAPI-н ерөнхий мэдээлэл
 	AppInfo struct {
 		ApplicationDir string `json:"applicationDir"` // Файл байршиж буй хавтас
 		CurrentDir     string `json:"currentDir"`     // Файл байршиж буй хавтас
@@ -306,15 +343,21 @@ type (
 		DatabaseHost   string `json:"database-host"`  // Баазын хаяг /sqlite бол файлын зам/
 		WorkDir        string `json:"workDir"`        // Ажиллаж буй хавтас
 	}
+
+	// PosAPI-д бүртгэлтэй ААН мэдээлэл
 	MerchantData struct {
 		Name      string         `json:"name"`      // ААН-нэр
 		TIN       string         `json:"tin"`       // ААН-н ТТД
 		Customers []CustomerData `json:"customers"` // Үйлчлүүлэгч ААН-н жагсаалт
 	}
+
+	// Үйлчлүүлэгч ААН мэдээлэл
 	CustomerData struct {
 		Name string `json:"name"` // ААН-нэр
 		TIN  string `json:"tin"`  // ААН-н ТТД
 	}
+
+	// Банкны дансны мэдээлэл хүлээн авах сервисийн мэдээлэл
 	BankAccountData struct {
 		ID              string `json:"id"`              // ААН, Иргэний системд бүртгэсэн банкны дансны ID
 		TIN             int    `json:"tin"`             // Данс эзэмшигч ААН, Иргэний ТТД
@@ -323,6 +366,8 @@ type (
 		BankID          int    `json:"bankId"`          // Банкны ID
 		BankName        string `json:"bankName"`        // Банкны нэр
 	}
+
+	// Амжилттай хариу
 	SuccessResponse struct {
 		Success bool `json:"success"`
 	}
