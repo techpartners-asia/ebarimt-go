@@ -1,6 +1,8 @@
 package pos3_0
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 func (p *pos3_0) ReceiptSend(body ReceiptRequest) (ReceiptResponse, error) {
 	response, err := p.httpPosRequest(body, PosReceiptSendAPI, "", nil)

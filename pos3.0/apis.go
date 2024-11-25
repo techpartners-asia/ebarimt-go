@@ -204,7 +204,8 @@ func (p *pos3_0) httpPosRequest(body interface{}, api utils.API, ext string, hea
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add("Accept", utils.HttpAcceptPublic)
+	// req.Header.Add("Accept", utils.HttpAcceptPublic)
+	req.Header.Add("Content-type", utils.HttpAcceptPrivate)
 	for _, header := range headers {
 		req.Header.Add(header.Name, header.Value)
 	}

@@ -43,19 +43,19 @@ const (
 	PAYMENT_CARD PaymentCode = "PAYMENT_CARD" // Төлбөрийн карт
 )
 
-type PaymentStatusEnum string
+type PaymentStatus string
 
 const (
-	PaymentStatusPaid     PaymentStatusEnum = "PAID"     // Төлбөр амжилттай хийгдсэнийг тодорхойлоно
-	PaymentStatusPay      PaymentStatusEnum = "PAY"      // Төлбөрийн мэдээллийг “Баримтын мэдээлэл солилцох сервис”-г ашиглан гүйцэтгэнэ.
-	PaymentStatusReversed PaymentStatusEnum = "REVERSED" // Төлбөр буцаагдсан
-	PaymentStatusError    PaymentStatusEnum = "ERROR"    // Төлөлт амжилтгүй болсон
+	STATUS_PAID     PaymentStatus = "PAID"     // Төлбөр амжилттай хийгдсэнийг тодорхойлоно
+	STATUS_PAY      PaymentStatus = "PAY"      // Төлбөрийн мэдээллийг “Баримтын мэдээлэл солилцох сервис”-г ашиглан гүйцэтгэнэ.
+	STATUS_REVERSED PaymentStatus = "REVERSED" // Төлбөр буцаагдсан
+	STATUS_ERROR    PaymentStatus = "ERROR"    // Төлөлт амжилтгүй болсон
 )
 
-type BarcodeTypeEnum string
+type BarcodeType string
 
 const (
-	BarcodeTypeUndefined BarcodeTypeEnum = "UNDEFINED"
-	BarcodeTypeGS1       BarcodeTypeEnum = "GS1"
-	BarcodeTypeISBN      BarcodeTypeEnum = "ISBN"
+	BARCODE_UNDEFINED BarcodeType = "UNDEFINED"
+	BARCODE_GS1       BarcodeType = "GS1"
+	BARCODE_ISBN      BarcodeType = "ISBN"
 )
