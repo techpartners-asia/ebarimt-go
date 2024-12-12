@@ -6,10 +6,15 @@ type pos3_0 struct {
 	token       *TokenResponse
 }
 
-func New(endpoint, apiKey string) Pos3_0 {
+type ConnectionInput struct {
+	PosEndpoint string
+	ApiKey      string
+}
+
+func New(input ConnectionInput) Pos3_0 {
 	return &pos3_0{
-		apiKey:      apiKey,
-		posEndpoint: endpoint,
+		apiKey:      input.ApiKey,
+		posEndpoint: input.PosEndpoint,
 	}
 }
 
