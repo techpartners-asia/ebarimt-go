@@ -383,14 +383,9 @@ type (
 
 	// Амжилттай хариу
 	Response struct {
-		Success          bool   `json:"success"`
-		Path             string `json:"path"`
-		Status           int    `json:"status"`
-		Message          string `json:"message"`
-		Timestamp        string `json:"timestamp"`
-		RequestID        string `json:"requestId"`
-		Error            string `json:"error"`
-		ErrorDescription string `json:"error_description"`
+		Status  int    `json:"status"`
+		Message string `json:"message"`
+		Date    string `json:"date"`
 	}
 )
 
