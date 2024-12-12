@@ -42,8 +42,8 @@ type Pos3_0 interface {
 
 	// POS
 	ReceiptSend(body ReceiptRequest) (ReceiptResponse, error)
-	ReceiptDelete(body ReceiptDeleteRequest) (SuccessResponse, error)
-	SendData() (SuccessResponse, error)
+	ReceiptDelete(body ReceiptDeleteRequest) (Response, error)
+	SendData() (Response, error)
 	Info() (InfoResponse, error)
 	BankAccounts(tin string) ([]BankAccountData, error)
 }
