@@ -3,18 +3,24 @@ package pos3_0
 type pos3_0 struct {
 	posEndpoint string
 	apiKey      string
+	posNo       string
+	merchantTin string
 	token       *TokenResponse
 }
 
 type ConnectionInput struct {
 	PosEndpoint string
 	ApiKey      string
+	PosNo       string
+	MerchantTin string
 }
 
 func New(input ConnectionInput) Pos3_0 {
 	return &pos3_0{
 		apiKey:      input.ApiKey,
 		posEndpoint: input.PosEndpoint,
+		posNo:       input.PosNo,
+		merchantTin: input.MerchantTin,
 	}
 }
 
