@@ -14,20 +14,24 @@ func (p *pos3_0) ReceiptSend(body ReceiptRequest) (ReceiptResponse, error) {
 	return resp, nil
 }
 
-func (p *pos3_0) ReceiptDelete(body ReceiptDeleteRequest) (SuccessResponse, error) {
-	_, err := p.httpPosRequest(body, PosReceiptDeleteAPI, "", nil)
+func (p *pos3_0) ReceiptDelete(body ReceiptDeleteRequest) (Response, error) {
+	response, err := p.httpPosRequest(body, PosReceiptDeleteAPI, "", nil)
 	if err != nil {
-		return SuccessResponse{}, err
+		return Response{}, err
 	}
-	return SuccessResponse{Success: true}, nil
+	var resp Response
+	json.Unmarshal(response, &resp)
+	return resp, nil
 }
 
-func (p *pos3_0) SendData() (SuccessResponse, error) {
-	_, err := p.httpPosRequest(nil, PosSendAPI, "", nil)
+func (p *pos3_0) SendData() (Response, error) {
+	response, err := p.httpPosRequest(nil, PosSendAPI, "", nil)
 	if err != nil {
-		return SuccessResponse{}, err
+		return Response{}, err
 	}
-	return SuccessResponse{Success: true}, nil
+	var resp Response
+	json.Unmarshal(response, &resp)
+	return resp, nil
 }
 
 func (p *pos3_0) Info() (InfoResponse, error) {

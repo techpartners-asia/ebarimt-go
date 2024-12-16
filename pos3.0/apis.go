@@ -226,8 +226,8 @@ func (p *pos3_0) httpPosRequest(body interface{}, api utils.API, ext string, hea
 	if err != nil {
 		return nil, err
 	}
-	if res.StatusCode != 200 {
-		return nil, errors.New(string(response))
-	}
+	// if res.StatusCode != 200 {
+	// 	return nil, errors.New(string(response))
+	// }
 	return response, nil
 }

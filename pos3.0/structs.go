@@ -382,8 +382,10 @@ type (
 	}
 
 	// Амжилттай хариу
-	SuccessResponse struct {
-		Success bool `json:"success"`
+	Response struct {
+		Status  int    `json:"status"`
+		Message string `json:"message"`
+		Date    string `json:"date"`
 	}
 )
 
