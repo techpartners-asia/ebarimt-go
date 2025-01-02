@@ -24,7 +24,7 @@ const (
 	TAX_VAT_ABLE TaxType = "VAT_ABLE" // НӨАТ тооцох бүтээгдэхүүн, үйлчилгээ
 	TAX_VAT_FREE TaxType = "VAT_FREE" // НӨАТ-аас чөлөөлөгдөх бүтээгдэхүүн, үйлчилгээ
 	TAX_VAT_ZERO TaxType = "VAT_ZERO" // НӨАТ-н 0 хувь тооцох бүтээгдэхүүн, үйлчилгээ
-	TAX_NO_VAT   TaxType = "NO_VAT"   // Монгол улсын хилийн гадна борлуулсан бүтээгдэхүүн үйлчилгээ
+	TAX_NO_VAT   TaxType = "NOT_VAT"   // Монгол улсын хилийн гадна борлуулсан бүтээгдэхүүн үйлчилгээ
 )
 
 type ReceiptType string
