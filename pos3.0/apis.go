@@ -92,7 +92,7 @@ var (
 		Method: http.MethodDelete,
 	}
 	PosSendAPI = utils.API{
-		Url:    "/rest/send",
+		Url:    "/rest/sendData",
 		Method: http.MethodGet,
 	}
 	PosInfoAPI = utils.API{
